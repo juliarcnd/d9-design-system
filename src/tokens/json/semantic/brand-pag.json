@@ -1,0 +1,18 @@
+{
+  "color-brand":        { "value": "#2F9000",                 "type": "color" },
+  "color-brand-hover":  { "value": "#267300",                 "type": "color" },
+  "color-brand-active": { "value": "#1C5600",                 "type": "color" },
+  "color-brand-subtle": { "value": "rgba(47, 144, 0, 0.12)", "type": "color" },
+  "color-brand-border": { "value": "rgba(47, 144, 0, 0.35)", "type": "color" },
+  "color-brand-fg":     { "value": "#FFFFFF",                 "type": "color" },
+  "brand-50":  { "value": "#E8F5E0", "type": "color" },
+  "brand-100": { "value": "#D1EBC1", "type": "color" },
+  "brand-200": { "value": "#A3D782", "type": "color" },
+  "brand-300": { "value": "#75C344", "type": "color" },
+  "brand-400": { "value": "#4DAF15", "type": "color" },
+  "brand-500": { "value": "#2F9000", "type": "color" },
+  "brand-600": { "value": "#267300", "type": "color" },
+  "brand-700": { "value": "#1C5600", "type": "color" },
+  "brand-800": { "value": "#133900", "type": "color" },
+  "brand-900": { "value": "#091D00", "type": "color" }
+}

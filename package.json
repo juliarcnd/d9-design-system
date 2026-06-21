@@ -6,7 +6,9 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "chromatic --project-token=chpt_b916949fb690edc"
+    "chromatic": "chromatic --project-token=chpt_b916949fb690edc",
+    "tokens:build": "node scripts/build-tokens.js",
+    "tokens:audit": "node scripts/audit-tokens.js"
   },
   "dependencies": {
     "react": "^18.3.1",

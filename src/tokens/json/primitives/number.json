@@ -1,0 +1,35 @@
+{
+  "spacing": {
+    "px":  { "value": "1px",      "type": "dimension" },
+    "0":   { "value": "0",        "type": "dimension" },
+    "0-5": { "value": "0.125rem", "type": "dimension" },
+    "1":   { "value": "0.25rem",  "type": "dimension" },
+    "2":   { "value": "0.5rem",   "type": "dimension" },
+    "3":   { "value": "1rem",     "type": "dimension" },
+    "4":   { "value": "1.5rem",   "type": "dimension" },
+    "5":   { "value": "3rem",     "type": "dimension" },
+    "6":   { "value": "4rem",     "type": "dimension" },
+    "7":   { "value": "5rem",     "type": "dimension" },
+    "8":   { "value": "6rem",     "type": "dimension" },
+    "10":  { "value": "8rem",     "type": "dimension" },
+    "12":  { "value": "10rem",    "type": "dimension" }
+  },
+  "borderRadius": {
+    "none": { "value": "0",       "type": "dimension" },
+    "sm":   { "value": "0.25rem", "type": "dimension" },
+    "base": { "value": "0.375rem","type": "dimension" },
+    "md":   { "value": "0.5rem",  "type": "dimension" },
+    "lg":   { "value": "0.75rem", "type": "dimension" },
+    "xl":   { "value": "1rem",    "type": "dimension" },
+    "2xl":  { "value": "1.5rem",  "type": "dimension" },
+    "full": { "value": "9999px",  "type": "dimension" }
+  },
+  "breakpoint": {
+    "xs":  { "value": "0px",    "type": "dimension" },
+    "sm":  { "value": "576px",  "type": "dimension" },
+    "md":  { "value": "768px",  "type": "dimension" },
+    "lg":  { "value": "992px",  "type": "dimension" },
+    "xl":  { "value": "1200px", "type": "dimension" },
+    "xxl": { "value": "1400px", "type": "dimension" }
+  }
+}

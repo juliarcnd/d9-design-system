@@ -1,0 +1,16 @@
+{
+  "field-height-sm":       { "value": "2.75rem",  "type": "sizing" },
+  "field-height-md":       { "value": "3.5rem",   "type": "sizing" },
+  "field-height-lg":       { "value": "4rem",     "type": "sizing" },
+  "icon-size-sm":          { "value": "1rem",     "type": "sizing" },
+  "icon-size-md":          { "value": "1.25rem",  "type": "sizing" },
+  "icon-size-lg":          { "value": "1.5rem",   "type": "sizing" },
+  "field-padding-x":       { "value": "1rem",     "type": "dimension" },
+  "field-padding-y-top":   { "value": "1.25rem",  "type": "dimension" },
+  "field-padding-y-bot":   { "value": "0.5rem",   "type": "dimension" },
+  "field-icon-left":       { "value": "0.75rem",  "type": "dimension" },
+  "field-text-with-icon":  { "value": "3.25rem",  "type": "dimension" },
+  "border-width-rest":     { "value": "1px",      "type": "dimension" },
+  "border-width-focus":    { "value": "3px",      "type": "dimension" },
+  "border-radius-field":   { "value": "0.25rem",  "type": "dimension" }
+}
