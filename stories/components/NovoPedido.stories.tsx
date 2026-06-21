@@ -140,7 +140,8 @@ function SectionTitle({ children, style }: { children: React.ReactNode; style?: 
 
 function Sidebar({ collapsed }: { collapsed: boolean }) {
 
-  const groups = [
+  type NavItem = { icon: React.ReactNode; label: string; active?: boolean; badge?: string }
+  const groups: { label: string; items: NavItem[] }[] = [
     { label: "PEDIDOS", items: [
       { icon: <IC.NovoPedido />,    label: "Novo pedido",          active: true },
       { icon: <IC.TodosPedidos />,  label: "Todos pedidos" },
@@ -243,9 +244,8 @@ function StepBar({ current }: { current: number }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 28 }}>
       {STEPS.map((step, i) => {
-        const done    = step.id < current
-        const active  = step.id === current
-        const pending = step.id > current
+        const done   = step.id < current
+        const active = step.id === current
         return (
           <React.Fragment key={step.id}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
@@ -341,6 +341,56 @@ function FreteCard({ opt, selected, onSelect }: { opt: FreteOpt; selected: boole
         <br /><span style={{ color: "var(--color-text-disabled)" }}>Custo real: {opt.cost}</span>
       </div>
     </label>
+  )
+}
+
+// ─── Painel lateral de resumo (passos 3 e 5) ─────────────────────────────────
+
+const FRETE_LABELS: Record<string, string> = { sedex: "Sedex", armazem: "Saída Armazém", jadlog: "Jadlog .com" }
+const FRETE_PRICES: Record<string, number> = { sedex: 29.47, armazem: 140, jadlog: 16.5 }
+
+function StepSidebar({ items, frete, highlight }: { items: { name: string; qty: number; price: number }[]; frete: string; highlight?: boolean }) {
+  const subtotal = items.reduce((a, i) => a + i.qty * i.price, 0)
+  const freteVal = FRETE_PRICES[frete] ?? 0
+  const total    = subtotal + freteVal
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <Card style={{ position: "sticky", top: 24 }}>
+        <SectionTitle>Resumo</SectionTitle>
+
+        {items.length === 0 ? (
+          <p style={{ fontSize: 12, color: "var(--color-text-disabled)", margin: 0 }}>Nenhum produto ainda.</p>
+        ) : (
+          items.map((it, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: 8, padding: "6px 0", borderBottom: "1px solid var(--color-border-subtle)", fontSize: 12 }}>
+              <span style={{ color: "var(--color-text-secondary)" }}>{it.name} <span style={{ color: "var(--color-text-disabled)" }}>×{it.qty}</span></span>
+              <span style={{ fontFamily: "IBM Plex Mono, monospace", fontWeight: 600, whiteSpace: "nowrap" }}>R$ {(it.qty * it.price).toFixed(2).replace(".", ",")}</span>
+            </div>
+          ))
+        )}
+
+        <Divider />
+
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+          <span style={{ color: "var(--color-text-secondary)" }}>Subtotal</span>
+          <span style={{ fontFamily: "IBM Plex Mono, monospace" }}>R$ {subtotal.toFixed(2).replace(".", ",")}</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+          <span style={{ color: "var(--color-text-secondary)" }}>Frete{frete ? ` (${FRETE_LABELS[frete]})` : ""}</span>
+          <span style={{ fontFamily: "IBM Plex Mono, monospace" }}>{frete ? `R$ ${freteVal.toFixed(2).replace(".", ",")}` : "—"}</span>
+        </div>
+
+        <Divider />
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "var(--color-text-primary)" }}>Total</span>
+          <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: highlight ? 20 : 16, fontWeight: 800, color: "var(--color-brand)" }}>
+            R$ {total.toFixed(2).replace(".", ",")}
+          </span>
+        </div>
+      </Card>
+    </div>
   )
 }
 
@@ -531,10 +581,8 @@ function Step4({ frete, setFrete }: { frete: string; setFrete: (v: string) => vo
 }
 
 function Step5({ items, frete, selectedClient }: { items: { name: string; qty: number; price: number }[]; frete: string; selectedClient: string }) {
-  const FRETE_PRICES: Record<string, number> = { sedex: 29.47, armazem: 140, jadlog: 16.5 }
   const subtotal = items.reduce((a, i) => a + i.qty * i.price, 0)
   const freteVal = FRETE_PRICES[frete] ?? 0
-  const total = subtotal + freteVal
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -575,7 +623,7 @@ function Step5({ items, frete, selectedClient }: { items: { name: string; qty: n
           <span style={{ fontSize: 13, color: "var(--color-text-secondary)" }}>Frete ({frete})</span>
           <InputGroup>
             <Input size="sm" defaultValue={`R$ ${freteVal.toFixed(2).replace(".", ",")}`} style={{ width: 110, fontFamily: "IBM Plex Mono, monospace", textAlign: "right" }} />
-            <InputGroupText size="sm" style={{ fontWeight: 700, color: "var(--color-brand)", cursor: "pointer" }}>$</InputGroupText>
+            <InputGroupText size="sm">$</InputGroupText>
           </InputGroup>
         </div>
         <ResumoLine label="Descontos" value="R$ 0,00" />
@@ -583,7 +631,7 @@ function Step5({ items, frete, selectedClient }: { items: { name: string; qty: n
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 0 0", marginTop: 4, borderTop: "2px solid var(--color-border)" }}>
           <span style={{ fontSize: 15, fontWeight: 700, color: "var(--color-text-primary)" }}>Total final</span>
           <span style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: 20, fontWeight: 800, color: "var(--color-brand)" }}>
-            R$ {total.toFixed(2).replace(".", ",")}
+            R$ {(subtotal + freteVal).toFixed(2).replace(".", ",")}
           </span>
         </div>
       </Card>
@@ -641,7 +689,7 @@ function NovoPedidoScreen() {
         </div>
 
         {/* Conteúdo */}
-        <div style={{ flex: 1, padding: "24px 32px", maxWidth: 760, width: "100%" }}>
+        <div style={{ flex: 1, padding: "28px 32px", width: "100%" }}>
           {/* Header */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
             <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: "var(--color-text-primary)" }}>Novo Pedido</h1>
@@ -655,24 +703,30 @@ function NovoPedidoScreen() {
           <StepBar current={step} />
 
           {/* Conteúdo do passo */}
-          <div style={{ marginBottom: 24 }}>
+          <div style={{ marginBottom: 24, display: "grid", gap: 20, gridTemplateColumns: step === 3 || step === 5 ? "1fr 360px" : "1fr" }}>
             {step === 1 && <Step1 tab={tab} setTab={setTab} selectedClient={selectedClient} setSelectedClient={setSelectedClient} />}
             {step === 2 && <Step2 cepLoading={cepLoading} setCepLoading={setCepLoading} />}
-            {step === 3 && <Step3 items={items} setItems={setItems} />}
+            {step === 3 && (
+              <>
+                <Step3 items={items} setItems={setItems} />
+                <StepSidebar items={items} frete={frete} />
+              </>
+            )}
             {step === 4 && <Step4 frete={frete} setFrete={setFrete} />}
-            {step === 5 && <Step5 items={items} frete={frete} selectedClient={selectedClient} />}
+            {step === 5 && (
+              <>
+                <Step5 items={items} frete={frete} selectedClient={selectedClient} />
+                <StepSidebar items={items} frete={frete} highlight />
+              </>
+            )}
           </div>
 
           {/* Aviso se não pode avançar */}
           {!canAdvance() && step === 1 && (
-            <Alert variant="info" style={{ marginBottom: 16 }}>
-              Selecione um cliente ou paciente para continuar.
-            </Alert>
+            <div style={{ marginBottom: 16 }}><Alert variant="info">Selecione um cliente ou paciente para continuar.</Alert></div>
           )}
           {!canAdvance() && step === 3 && (
-            <Alert variant="info" style={{ marginBottom: 16 }}>
-              Adicione pelo menos um produto para continuar.
-            </Alert>
+            <div style={{ marginBottom: 16 }}><Alert variant="info">Adicione pelo menos um produto para continuar.</Alert></div>
           )}
 
           {/* Navegação entre passos */}
