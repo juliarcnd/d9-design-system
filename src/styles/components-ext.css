@@ -479,10 +479,23 @@
   z-index: 1;
 }
 
-/* Esconde ícone nativo de date/time — usamos leadingIcon do M3 */
+/* Esconde ícone e texto nativo de date/time — usamos leadingIcon + helperText do M3 */
 .d9-input-outline[type="date"]::-webkit-calendar-picker-indicator,
 .d9-input-outline[type="time"]::-webkit-calendar-picker-indicator,
 .d9-input-outline[type="datetime-local"]::-webkit-calendar-picker-indicator { display: none; }
+
+.d9-input-outline[type="date"]::-webkit-datetime-edit,
+.d9-input-outline[type="date"]::-webkit-datetime-edit-fields-wrapper,
+.d9-input-outline[type="time"]::-webkit-datetime-edit,
+.d9-input-outline[type="time"]::-webkit-datetime-edit-fields-wrapper,
+.d9-input-outline[type="datetime-local"]::-webkit-datetime-edit,
+.d9-input-outline[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper { display: none; }
+
+/* Mostra o texto nativo apenas quando o campo tem valor (label flutuando) */
+.d9-field-outline.is-floating .d9-input-outline[type="date"]::-webkit-datetime-edit,
+.d9-field-outline.is-floating .d9-input-outline[type="date"]::-webkit-datetime-edit-fields-wrapper,
+.d9-field-outline.is-floating .d9-input-outline[type="time"]::-webkit-datetime-edit,
+.d9-field-outline.is-floating .d9-input-outline[type="time"]::-webkit-datetime-edit-fields-wrapper { display: block; }
 
 .d9-field-outline-textarea .d9-outline-fieldset        { inset: -6px 0 0 0; }
 .d9-field-outline-textarea .d9-float-label             { top: 1.25rem; transform: none; }

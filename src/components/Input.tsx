@@ -20,8 +20,9 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   bare?: boolean
 }
 
-// Tipos de input que sempre mostram texto nativo no interior — label deve flutuar sempre
-const ALWAYS_FLOAT_TYPES = new Set(["date", "time", "datetime-local", "month", "week", "color"])
+// Tipos que sempre mostram UI nativa no interior — label deve flutuar sempre
+// date/time NÃO estão aqui: escondemos o texto nativo via CSS e usamos helperText
+const ALWAYS_FLOAT_TYPES = new Set(["color"])
 
 export function Input({
   label,
