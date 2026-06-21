@@ -244,6 +244,298 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
+   FORMS — Label, Input, Textarea, Select, Checkbox, Radio, InputGroup
+══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Form field wrapper ── */
+.d9-field { display: flex; flex-direction: column; }
+
+/* ── Label ── */
+.d9-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.375rem;
+  line-height: 1.4;
+}
+.d9-label-sm { font-size: 0.8125rem; }
+.d9-label-lg { font-size: 1rem; }
+
+.d9-label-required::after {
+  content: "*";
+  color: var(--color-error);
+  font-weight: 700;
+  margin-left: 0.1rem;
+}
+.d9-label-optional .d9-label-opt-tag {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--color-text-disabled);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+  line-height: 1.5;
+}
+
+/* ── Hint / feedback ── */
+.d9-form-hint    { font-size: 0.75rem; color: var(--color-text-secondary); margin-top: 0.35rem; line-height: 1.4; }
+.d9-form-valid   { font-size: 0.75rem; color: var(--color-success);        margin-top: 0.35rem; line-height: 1.4; }
+.d9-form-invalid { font-size: 0.75rem; color: var(--color-error);          margin-top: 0.35rem; line-height: 1.4; }
+
+/* ── Input / Textarea / Select — base ── */
+.d9-input,
+.d9-textarea,
+.d9-select {
+  width: 100%;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 0.375rem;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.d9-input::placeholder,
+.d9-textarea::placeholder { color: var(--color-text-disabled); }
+
+/* Sizes */
+.d9-input-sm, .d9-select-sm   { padding: 0.3125rem 0.625rem; font-size: 0.8125rem; border-radius: 0.25rem; }
+.d9-input-md, .d9-select-md   { padding: 0.5rem    0.75rem; }
+.d9-input-lg, .d9-select-lg   { padding: 0.625rem  1rem;    font-size: 1rem; border-radius: 0.5rem; }
+
+.d9-textarea-sm { padding: 0.375rem 0.625rem; font-size: 0.8125rem; }
+.d9-textarea-md { padding: 0.5rem   0.75rem; }
+.d9-textarea-lg { padding: 0.625rem 1rem;    font-size: 1rem; }
+
+/* Focus */
+.d9-input:focus,
+.d9-textarea:focus,
+.d9-select:focus {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px var(--color-brand-subtle);
+}
+
+/* Valid */
+.d9-input-valid,
+.d9-textarea-valid,
+.d9-select-valid { border-color: var(--color-success) !important; }
+.d9-input-valid:focus,
+.d9-textarea-valid:focus,
+.d9-select-valid:focus { box-shadow: 0 0 0 3px var(--color-success-muted) !important; }
+
+/* Invalid */
+.d9-input-invalid,
+.d9-textarea-invalid,
+.d9-select-invalid { border-color: var(--color-error) !important; }
+.d9-input-invalid:focus,
+.d9-textarea-invalid:focus,
+.d9-select-invalid:focus { box-shadow: 0 0 0 3px var(--color-error-muted) !important; }
+
+/* Disabled / readonly */
+.d9-input:disabled,
+.d9-textarea:disabled,
+.d9-select:disabled {
+  background: var(--color-surface-raised);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+.d9-input[readonly],
+.d9-textarea[readonly] {
+  background: var(--color-surface-raised);
+  border-color: var(--color-border-subtle);
+  cursor: default;
+}
+
+/* ── Textarea ── */
+.d9-textarea { resize: vertical; min-height: 5rem; }
+.d9-textarea-no-resize { resize: none; }
+
+/* ── Select — custom arrow ── */
+.d9-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236B7494' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
+.d9-select:disabled { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234F5670' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); }
+
+/* ── Checkbox / Radio ── */
+.d9-check {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.d9-check input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.d9-check-box,
+.d9-check-dot {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.1rem;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border-strong);
+  transition: background 120ms, border-color 120ms, box-shadow 120ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.d9-check-box   { border-radius: 0.25rem; }
+.d9-check-dot   { border-radius: 50%; }
+
+/* Checkmark SVG */
+.d9-check-box::after {
+  content: "";
+  display: block;
+  width: 0.35rem;
+  height: 0.6rem;
+  border: 2px solid transparent;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translateY(-1px);
+  opacity: 0;
+  transition: opacity 100ms;
+}
+
+/* Radio dot */
+.d9-check-dot::after {
+  content: "";
+  display: block;
+  width: 0.425rem;
+  height: 0.425rem;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 100ms;
+}
+
+/* Checked states */
+.d9-check input:checked ~ .d9-check-box {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+}
+.d9-check input:checked ~ .d9-check-box::after {
+  border-color: var(--color-brand-fg);
+  opacity: 1;
+}
+
+.d9-check input:checked ~ .d9-check-dot {
+  border-color: var(--color-brand);
+}
+.d9-check input:checked ~ .d9-check-dot::after {
+  background: var(--color-brand);
+}
+
+/* Focus */
+.d9-check input:focus-visible ~ .d9-check-box,
+.d9-check input:focus-visible ~ .d9-check-dot {
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 3px var(--color-brand-subtle);
+}
+
+/* Indeterminate */
+.d9-check input:indeterminate ~ .d9-check-box {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+}
+.d9-check input:indeterminate ~ .d9-check-box::after {
+  width: 0.55rem;
+  height: 0;
+  border: 1.5px solid var(--color-brand-fg);
+  border-left: none;
+  border-top: none;
+  transform: none;
+  translateY: 0;
+  opacity: 1;
+}
+
+/* Disabled */
+.d9-check input:disabled ~ .d9-check-box,
+.d9-check input:disabled ~ .d9-check-dot {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.d9-check:has(input:disabled) { cursor: not-allowed; opacity: 0.65; }
+
+/* Sizes */
+.d9-check-sm .d9-check-box,
+.d9-check-sm .d9-check-dot { width: 0.9375rem; height: 0.9375rem; }
+.d9-check-sm { font-size: 0.8125rem; }
+
+.d9-check-lg .d9-check-box,
+.d9-check-lg .d9-check-dot { width: 1.375rem; height: 1.375rem; }
+.d9-check-lg { font-size: 1rem; }
+
+/* ── Input Group ── */
+.d9-input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.d9-input-group .d9-input,
+.d9-input-group .d9-select {
+  border-radius: 0;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+.d9-input-group .d9-input:focus,
+.d9-input-group .d9-select:focus { z-index: 2; }
+
+.d9-input-group > :first-child,
+.d9-input-group > :first-child .d9-input,
+.d9-input-group > :first-child .d9-select,
+.d9-input-group > :first-child .d9-btn { border-radius: 0.375rem 0 0 0.375rem; }
+
+.d9-input-group > :last-child,
+.d9-input-group > :last-child .d9-input,
+.d9-input-group > :last-child .d9-select,
+.d9-input-group > :last-child .d9-btn { border-radius: 0 0.375rem 0.375rem 0; }
+
+.d9-input-group-text {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-raised);
+  border: 1.5px solid var(--color-border);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.d9-input-group-text-sm { padding: 0.3125rem 0.625rem; font-size: 0.8125rem; }
+.d9-input-group-text-lg { padding: 0.625rem  1rem;    font-size: 1rem; }
+
+/* Merge borders between adjacent items */
+.d9-input-group > * + * { margin-left: -1.5px; }
+
+/* Button inside group */
+.d9-input-group .d9-btn { border-radius: 0; }
+
+/* ══════════════════════════════════════════════════════════════════════════════
    SPINNER
 ══════════════════════════════════════════════════════════════════════════════ */
 
