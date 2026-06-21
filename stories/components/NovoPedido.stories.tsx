@@ -407,46 +407,99 @@ function ResumoLine({ label, value, highlight }: { label: string; value: string;
 
 // ─── Passos ───────────────────────────────────────────────────────────────────
 
+type SearchResult = { id: string; name: string; cpf: string; tipo: string; operador: string; phone: string }
+
+const COMPRADORES: SearchResult[] = [
+  { id: "244", name: "CARLOS EDUARDO CAMARGO SANCHES", cpf: "384.676.598-82", tipo: "Humano",  operador: "Gabriel Camargo", phone: "(11) 98877-6655" },
+  { id: "242", name: "LAURO VIEIRA CHAVES",            cpf: "000.000.001-91", tipo: "B2B",     operador: "Gabriel Camargo", phone: "(21) 91234-5678" },
+  { id: "140", name: "YURI TADEU COVO ZWAIG",          cpf: "123.456.789-00", tipo: "Humano",  operador: "Ana Lima",        phone: "(31) 97654-3210" },
+]
+const PACIENTES: SearchResult[] = [
+  { id: "381", name: "MARIA SOUZA",                    cpf: "987.654.321-00", tipo: "Paciente", operador: "Gabriel Camargo", phone: "(11) 98877-6655" },
+  { id: "379", name: "JOÃO FARIA",                     cpf: "111.222.333-44", tipo: "Paciente", operador: "Ana Lima",        phone: "(21) 91234-5678" },
+]
+
 function Step1({ tab, setTab, selectedClient, setSelectedClient }: {
   tab: string; setTab: (v: string) => void
-  selectedClient: string; setSelectedClient: (v: string) => void
+  selectedClient: SearchResult | null; setSelectedClient: (v: SearchResult | null) => void
 }) {
-  const CLIENTES = ["Maria Souza · (11) 98877-6655", "João Faria · (21) 91234-5678", "Ana Beatriz · (31) 97654-3210"]
+  const [query, setQuery] = useState("")
+  const pool = tab === "cliente" ? COMPRADORES : PACIENTES
+  const results = query.length >= 1 ? pool.filter(r =>
+    r.name.toLowerCase().includes(query.toLowerCase()) ||
+    r.id.includes(query) ||
+    r.cpf.includes(query) ||
+    r.phone.includes(query)
+  ) : pool
+
   return (
     <Card>
       <SectionTitle>Quem vai receber?</SectionTitle>
-      <Tabs value={tab} onChange={setTab} options={[{ value: "cliente", label: "Cliente", count: 142 }, { value: "paciente", label: "Paciente" }]} />
-      <div style={{ position: "relative" }}>
-        <Input placeholder="Buscar por nome, ID, telefone ou e-mail" hint="Digite pelo menos 3 caracteres" />
-        <span style={{ position: "absolute", right: 10, top: 10, color: "var(--color-text-disabled)", pointerEvents: "none" }}><IC.Search /></span>
+      <Tabs value={tab} onChange={(v) => { setTab(v); setQuery("") }} options={[{ value: "cliente", label: "Comprador", count: 142 }, { value: "paciente", label: "Paciente" }]} />
+
+      {/* Campo de busca */}
+      <div style={{ position: "relative", marginBottom: 2 }}>
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={tab === "cliente" ? "Pesquisar compradores. Por CPF, Nome ou ID" : "Pesquisar pacientes. Por CPF, Nome ou ID"}
+          style={{
+            width: "100%", boxSizing: "border-box",
+            padding: "10px 36px 10px 12px",
+            background: "var(--color-surface-raised)",
+            border: "1.5px solid var(--color-brand)",
+            borderRadius: 6, outline: "none",
+            fontFamily: "Plus Jakarta Sans, sans-serif",
+            fontSize: 13, color: "var(--color-text-primary)",
+          }}
+        />
+        <span style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", color: "var(--color-brand)", pointerEvents: "none" }}>
+          <IC.Search />
+        </span>
       </div>
-      {/* Sugestões */}
-      {selectedClient === "" && (
-        <div style={{ marginTop: 10, background: "var(--color-surface-raised)", border: "1px solid var(--color-border)", borderRadius: 8, overflow: "hidden" }}>
-          {CLIENTES.map((c) => (
-            <div key={c} onClick={() => setSelectedClient(c)} style={{
-              padding: "10px 14px", cursor: "pointer", fontSize: 13,
-              color: "var(--color-text-primary)", borderBottom: "1px solid var(--color-border-subtle)",
-              display: "flex", alignItems: "center", gap: 8, transition: "background 100ms",
-            }}>
-              <IC.Clientes />
-              {c}
-              <IC.ChevronRight />
+
+      {/* Lista de resultados */}
+      {!selectedClient && (
+        <div style={{ background: "var(--color-surface-raised)", border: "1px solid var(--color-border)", borderRadius: 8, overflow: "hidden", marginTop: 8 }}>
+          {results.map((r, i) => (
+            <div
+              key={r.id}
+              onClick={() => setSelectedClient(r)}
+              style={{
+                padding: "12px 14px", cursor: "pointer",
+                borderBottom: i < results.length - 1 ? "1px solid var(--color-border-subtle)" : "none",
+                transition: "background 100ms",
+              }}
+            >
+              <p style={{ margin: "0 0 2px", fontSize: 13, fontWeight: 700, color: "var(--color-brand)", fontFamily: "IBM Plex Mono, monospace", letterSpacing: "0.01em" }}>
+                #{r.id} {r.name}
+              </p>
+              <p style={{ margin: "0 0 2px", fontSize: 11, color: "var(--color-brand)", fontFamily: "IBM Plex Mono, monospace" }}>
+                CPF: {r.cpf}
+              </p>
+              <p style={{ margin: 0, fontSize: 11, color: "var(--color-text-secondary)" }}>
+                Tipo: <span style={{ fontWeight: 600, color: "var(--color-text-primary)" }}>{r.tipo}</span>
+                <span style={{ margin: "0 12px", color: "var(--color-border)" }}>|</span>
+                Operador: <span style={{ fontWeight: 600, color: "var(--color-text-primary)" }}>{r.operador}</span>
+              </p>
             </div>
           ))}
         </div>
       )}
-      {/* Cliente selecionado */}
+
+      {/* Selecionado */}
       {selectedClient && (
-        <div style={{ marginTop: 12, background: "var(--color-brand-subtle)", border: "1.5px solid var(--color-brand-border)", borderRadius: 8, padding: "12px 14px", display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-brand-fg)", fontSize: 13, fontWeight: 700 }}>
-            {selectedClient[0]}
+        <div style={{ marginTop: 10, background: "var(--color-brand-subtle)", border: "1.5px solid var(--color-brand-border)", borderRadius: 8, padding: "12px 14px", display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-brand-fg)", fontSize: 13, fontWeight: 700, flexShrink: 0 }}>
+            {selectedClient.name[0]}
           </div>
-          <div style={{ flex: 1 }}>
-            <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: "var(--color-text-primary)" }}>{selectedClient.split(" · ")[0]}</p>
-            <p style={{ margin: 0, fontSize: 11, color: "var(--color-text-secondary)", fontFamily: "IBM Plex Mono, monospace" }}>{selectedClient.split(" · ")[1]}</p>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: "var(--color-text-primary)" }}>#{selectedClient.id} {selectedClient.name}</p>
+            <p style={{ margin: 0, fontSize: 11, color: "var(--color-text-secondary)", fontFamily: "IBM Plex Mono, monospace" }}>
+              CPF: {selectedClient.cpf} · {selectedClient.phone}
+            </p>
           </div>
-          <Button variant="ghost" size="sm" iconOnly onClick={() => setSelectedClient("")} aria-label="Remover"><IC.Trash /></Button>
+          <Button variant="ghost" size="sm" iconOnly onClick={() => setSelectedClient(null)} aria-label="Remover"><IC.Trash /></Button>
         </div>
       )}
     </Card>
@@ -580,15 +633,14 @@ function Step4({ frete, setFrete }: { frete: string; setFrete: (v: string) => vo
   )
 }
 
-function Step5({ items, frete, selectedClient }: { items: { name: string; qty: number; price: number }[]; frete: string; selectedClient: string }) {
+function Step5({ items, frete, selectedClient }: { items: { name: string; qty: number; price: number }[]; frete: string; selectedClient: SearchResult | null }) {
   const subtotal = items.reduce((a, i) => a + i.qty * i.price, 0)
   const freteVal = FRETE_PRICES[frete] ?? 0
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      {/* Resumo dos passos anteriores */}
       {selectedClient && (
-        <Alert variant="success" title="Destinatário confirmado">{selectedClient.split(" · ")[0]}</Alert>
+        <Alert variant="success" title="Destinatário confirmado">#{selectedClient.id} {selectedClient.name}</Alert>
       )}
 
       <Card>
@@ -645,13 +697,13 @@ function NovoPedidoScreen() {
   const [step, setStep]           = useState(1)
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [tab, setTab]             = useState("cliente")
-  const [selectedClient, setSelectedClient] = useState("")
+  const [selectedClient, setSelectedClient] = useState<SearchResult | null>(null)
   const [frete, setFrete]         = useState("")
   const [items, setItems]         = useState<{ name: string; qty: number; price: number }[]>([])
   const [cepLoading, setCepLoading] = useState(false)
 
   function canAdvance() {
-    if (step === 1) return selectedClient !== ""
+    if (step === 1) return selectedClient !== null
     if (step === 3) return items.length > 0
     return true
   }
@@ -702,16 +754,34 @@ function NovoPedidoScreen() {
           {/* Barra de passos */}
           <StepBar current={step} />
 
+          {/* Título e subtítulo do passo atual */}
+          {(() => {
+            const meta: Record<number, { title: string; subtitle: string }> = {
+              1: { title: "Destinatário",   subtitle: "Busque e selecione o comprador ou paciente que receberá este pedido para continuar." },
+              2: { title: "Endereço",       subtitle: "Informe o endereço de entrega. Você pode usar um endereço salvo ou preencher manualmente." },
+              3: { title: "Produtos",       subtitle: "Adicione os itens do pedido. Ajuste a quantidade antes de inserir." },
+              4: { title: "Entrega",        subtitle: "Escolha como o pedido será enviado e selecione a modalidade de frete." },
+              5: { title: "Confirmação",    subtitle: "Revise tudo antes de criar. Você ainda pode voltar e corrigir qualquer informação." },
+            }
+            const { title, subtitle } = meta[step]
+            return (
+              <div style={{ marginBottom: 20 }}>
+                <h2 style={{ margin: "0 0 4px", fontSize: 18, fontWeight: 800, color: "var(--color-text-primary)" }}>{title}</h2>
+                <p style={{ margin: 0, fontSize: 13, color: "var(--color-text-secondary)", lineHeight: 1.5 }}>{subtitle}</p>
+                {!canAdvance() && step === 3 && (
+                  <p style={{ margin: "6px 0 0", fontSize: 12, color: "var(--color-info)", fontWeight: 500 }}>
+                    Adicione pelo menos um produto para continuar.
+                  </p>
+                )}
+              </div>
+            )
+          })()}
+
           {/* Conteúdo do passo */}
-          <div style={{ marginBottom: 24, display: "grid", gap: 20, gridTemplateColumns: step === 3 || step === 5 ? "1fr 360px" : "1fr" }}>
+          <div style={{ marginBottom: 24, display: "grid", gap: 20, gridTemplateColumns: step === 5 ? "1fr 360px" : "1fr" }}>
             {step === 1 && <Step1 tab={tab} setTab={setTab} selectedClient={selectedClient} setSelectedClient={setSelectedClient} />}
             {step === 2 && <Step2 cepLoading={cepLoading} setCepLoading={setCepLoading} />}
-            {step === 3 && (
-              <>
-                <Step3 items={items} setItems={setItems} />
-                <StepSidebar items={items} frete={frete} />
-              </>
-            )}
+            {step === 3 && <Step3 items={items} setItems={setItems} />}
             {step === 4 && <Step4 frete={frete} setFrete={setFrete} />}
             {step === 5 && (
               <>
@@ -720,14 +790,6 @@ function NovoPedidoScreen() {
               </>
             )}
           </div>
-
-          {/* Aviso se não pode avançar */}
-          {!canAdvance() && step === 1 && (
-            <div style={{ marginBottom: 16 }}><Alert variant="info">Selecione um cliente ou paciente para continuar.</Alert></div>
-          )}
-          {!canAdvance() && step === 3 && (
-            <div style={{ marginBottom: 16 }}><Alert variant="info">Adicione pelo menos um produto para continuar.</Alert></div>
-          )}
 
           {/* Navegação entre passos */}
           <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
