@@ -1,147 +1,39 @@
-import { useState, useId } from "react"
+import React from "react"
 import "../styles/components.css"
-import "../styles/components-ext.css"
 
-export type InputSize  = "sm" | "md" | "lg"
-export type InputState = "default" | "valid" | "invalid"
+export type InputSize    = "sm" | "md" | "lg"
+export type InputState   = "default" | "valid" | "invalid"
 
-export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
-  label?: string
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   size?: InputSize
   state?: InputState
-  helperText?: string
-  /** @deprecated use helperText */
   hint?: string
-  /** @deprecated use helperText + state */
   feedbackMsg?: string
-  leadingIcon?: React.ReactNode
-  trailingIcon?: React.ReactNode
-  /** Modo bare: renderiza <input> simples sem wrapper — para uso dentro de InputGroup */
-  bare?: boolean
 }
 
-// Tipos que sempre mostram UI nativa no interior — label deve flutuar sempre
-// date/time NÃO estão aqui: escondemos o texto nativo via CSS e usamos helperText
-const ALWAYS_FLOAT_TYPES = new Set(["color"])
-
 export function Input({
-  label,
   size = "md",
   state = "default",
-  helperText,
   hint,
   feedbackMsg,
-  leadingIcon,
-  trailingIcon,
-  bare,
-  id: idProp,
   className = "",
-  disabled,
-  onFocus,
-  onBlur,
-  onChange,
-  value,
-  defaultValue,
-  placeholder,
-  style,
-  type,
+  id,
   ...props
 }: InputProps) {
-  const autoId = useId()
-  const id = idProp ?? autoId
-
-  // Hooks sempre no topo — antes de qualquer return condicional
-  const [focused, setFocused]         = useState(false)
-  const [internalVal, setInternalVal] = useState(defaultValue ?? "")
-
-  // ── Modo bare (InputGroup) ────────────────────────────────────────────────
-  if (bare) {
-    const bareCls = [
-      "d9-input",
-      size !== "md" ? `d9-input-${size}` : "",
-      state === "valid"   ? "d9-input-valid"   : "",
-      state === "invalid" ? "d9-input-invalid"  : "",
-      className,
-    ].filter(Boolean).join(" ")
-    return (
-      <input
-        id={id}
-        type={type}
-        className={bareCls}
-        disabled={disabled}
-        value={value}
-        defaultValue={value === undefined ? defaultValue : undefined}
-        placeholder={placeholder}
-        style={style}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        {...props}
-      />
-    )
-  }
-
-  // ── Modo outlined (Material Design) ──────────────────────────────────────
-  const currentVal  = value !== undefined ? value : internalVal
-  const alwaysFloat = ALWAYS_FLOAT_TYPES.has(type ?? "")
-  const isFloating  = alwaysFloat || focused || !!currentVal
-
-  const wrapCls = [
-    "d9-field-outline",
-    isFloating ? "is-floating"  : "",
-    focused    ? "is-focused"   : "",
-    state === "valid"   ? "is-valid"   : "",
-    state === "invalid" ? "is-invalid" : "",
-    disabled   ? "is-disabled"  : "",
-  ].filter(Boolean).join(" ")
-
-  const inputCls = [
-    "d9-input-outline",
-    size !== "md" ? `d9-input-outline-${size}` : "",
-    leadingIcon  ? "has-leading"  : "",
-    trailingIcon ? "has-trailing" : "",
+  const classes = [
+    "d9-input",
+    `d9-input-${size}`,
+    state === "valid"   ? "d9-input-valid"   : "",
+    state === "invalid" ? "d9-input-invalid"  : "",
     className,
   ].filter(Boolean).join(" ")
 
-  const helper = helperText ?? feedbackMsg ?? hint ?? placeholder
-
-  const helperCls = [
-    "d9-field-helper",
-    state === "invalid" ? "d9-field-helper-error"  : "",
-    state === "valid"   ? "d9-field-helper-success" : "",
-  ].filter(Boolean).join(" ")
-
   return (
-    <div className="d9-field-wrap" style={style}>
-      <div className={wrapCls}>
-        <fieldset className="d9-outline-fieldset" aria-hidden="true">
-          <legend className="d9-outline-legend">
-            {label && <span>{label}</span>}
-          </legend>
-        </fieldset>
-
-        {leadingIcon  && <span className="d9-field-icon-lead">{leadingIcon}</span>}
-        {trailingIcon && <span className="d9-field-icon-trail">{trailingIcon}</span>}
-
-        <input
-          id={id}
-          type={type}
-          className={inputCls}
-          disabled={disabled}
-          value={value}
-          defaultValue={value === undefined ? defaultValue : undefined}
-          onFocus={e => { setFocused(true);  onFocus?.(e) }}
-          onBlur={e =>  { setFocused(false); onBlur?.(e) }}
-          onChange={e => {
-            if (value === undefined) setInternalVal(e.target.value)
-            onChange?.(e)
-          }}
-          {...props}
-        />
-
-        {label && <label className="d9-float-label" htmlFor={id}>{label}</label>}
-      </div>
-      {helper && <span className={helperCls}>{helper}</span>}
+    <div className="d9-field">
+      <input id={id} className={classes} {...props} />
+      {feedbackMsg && state === "valid"   && <span className="d9-form-valid">{feedbackMsg}</span>}
+      {feedbackMsg && state === "invalid" && <span className="d9-form-invalid">{feedbackMsg}</span>}
+      {hint && !feedbackMsg && <span className="d9-form-hint">{hint}</span>}
     </div>
   )
 }
