@@ -1,0 +1,13 @@
+{
+  "tokenSetOrder": [
+    "primitives/color",
+    "primitives/number",
+    "typography",
+    "dimension",
+    "semantic/dark",
+    "semantic/light",
+    "semantic/brand-tech",
+    "semantic/brand-pro",
+    "semantic/brand-pag"
+  ]
+}

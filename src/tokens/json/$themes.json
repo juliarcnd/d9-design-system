@@ -1,0 +1,98 @@
+[
+  {
+    "id": "dark-tech",
+    "name": "Dark / Tech",
+    "selectedTokenSets": {
+      "primitives/color":    "enabled",
+      "primitives/number":   "enabled",
+      "typography":          "enabled",
+      "dimension":           "enabled",
+      "semantic/dark":       "enabled",
+      "semantic/light":      "disabled",
+      "semantic/brand-tech": "enabled",
+      "semantic/brand-pro":  "disabled",
+      "semantic/brand-pag":  "disabled"
+    },
+    "group": "D9 Tech"
+  },
+  {
+    "id": "light-tech",
+    "name": "Light / Tech",
+    "selectedTokenSets": {
+      "primitives/color":    "enabled",
+      "primitives/number":   "enabled",
+      "typography":          "enabled",
+      "dimension":           "enabled",
+      "semantic/dark":       "disabled",
+      "semantic/light":      "enabled",
+      "semantic/brand-tech": "enabled",
+      "semantic/brand-pro":  "disabled",
+      "semantic/brand-pag":  "disabled"
+    },
+    "group": "D9 Tech"
+  },
+  {
+    "id": "dark-pro",
+    "name": "Dark / Pro",
+    "selectedTokenSets": {
+      "primitives/color":    "enabled",
+      "primitives/number":   "enabled",
+      "typography":          "enabled",
+      "dimension":           "enabled",
+      "semantic/dark":       "enabled",
+      "semantic/light":      "disabled",
+      "semantic/brand-tech": "disabled",
+      "semantic/brand-pro":  "enabled",
+      "semantic/brand-pag":  "disabled"
+    },
+    "group": "D9 Pro"
+  },
+  {
+    "id": "light-pro",
+    "name": "Light / Pro",
+    "selectedTokenSets": {
+      "primitives/color":    "enabled",
+      "primitives/number":   "enabled",
+      "typography":          "enabled",
+      "dimension":           "enabled",
+      "semantic/dark":       "disabled",
+      "semantic/light":      "enabled",
+      "semantic/brand-tech": "disabled",
+      "semantic/brand-pro":  "enabled",
+      "semantic/brand-pag":  "disabled"
+    },
+    "group": "D9 Pro"
+  },
+  {
+    "id": "dark-pag",
+    "name": "Dark / Pag",
+    "selectedTokenSets": {
+      "primitives/color":    "enabled",
+      "primitives/number":   "enabled",
+      "typography":          "enabled",
+      "dimension":           "enabled",
+      "semantic/dark":       "enabled",
+      "semantic/light":      "disabled",
+      "semantic/brand-tech": "disabled",
+      "semantic/brand-pro":  "disabled",
+      "semantic/brand-pag":  "enabled"
+    },
+    "group": "D9 Pag"
+  },
+  {
+    "id": "light-pag",
+    "name": "Light / Pag",
+    "selectedTokenSets": {
+      "primitives/color":    "enabled",
+      "primitives/number":   "enabled",
+      "typography":          "enabled",
+      "dimension":           "enabled",
+      "semantic/dark":       "disabled",
+      "semantic/light":      "enabled",
+      "semantic/brand-tech": "disabled",
+      "semantic/brand-pro":  "disabled",
+      "semantic/brand-pag":  "enabled"
+    },
+    "group": "D9 Pag"
+  }
+]
