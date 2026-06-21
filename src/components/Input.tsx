@@ -45,7 +45,7 @@ export function Input({
   const [internalVal, setInternalVal] = useState(defaultValue ?? "")
 
   const currentVal = value !== undefined ? value : internalVal
-  const isFloating = focused || !!currentVal || !!placeholder
+  const isFloating = focused || !!currentVal
 
   const wrapCls = [
     "d9-field-outline",
@@ -64,7 +64,8 @@ export function Input({
     className,
   ].filter(Boolean).join(" ")
 
-  const helper = helperText ?? feedbackMsg ?? hint
+  // placeholder vira texto de apoio abaixo; helperText/feedbackMsg têm prioridade
+  const helper = helperText ?? feedbackMsg ?? hint ?? placeholder
 
   const helperCls = [
     "d9-field-helper",
@@ -84,7 +85,6 @@ export function Input({
           disabled={disabled}
           value={value}
           defaultValue={value === undefined ? defaultValue : undefined}
-          placeholder={placeholder}
           onFocus={e => { setFocused(true);  onFocus?.(e) }}
           onBlur={e =>  { setFocused(false); onBlur?.(e) }}
           onChange={e => {
