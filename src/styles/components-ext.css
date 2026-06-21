@@ -448,6 +448,10 @@
 /* Ícones leading / trailing */
 .d9-input-outline.has-leading  { padding-left: 2.5rem; }
 .d9-input-outline.has-trailing { padding-right: 2.5rem; }
+
+/* Label recua quando há ícone leading */
+.d9-field-outline:has(.has-leading) .d9-float-label { left: 2.5rem; }
+.d9-field-outline.is-floating:has(.has-leading) .d9-float-label { left: 0.75rem; }
 .d9-field-outline .d9-field-icon-lead,
 .d9-field-outline .d9-field-icon-trail {
   position: absolute;
