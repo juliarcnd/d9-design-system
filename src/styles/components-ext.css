@@ -379,11 +379,11 @@
   z-index: 1;
 }
 
-/* Label flutuante vai para top:-6px (NA borda, fora do campo) — não precisa de padding extra no topo.
-   Padding simétrico centra o texto AND alinha a label resting com o texto do input. */
-.d9-input-outline    { padding: 0 1rem; height: 3.5rem; line-height: 3.5rem; }
-.d9-input-outline-sm { padding: 0 1rem; height: 2.75rem; line-height: 2.75rem; font-size: 0.875rem; }
-.d9-input-outline-lg { padding: 0 1rem; height: 4rem;   line-height: 4rem;   font-size: 1.125rem; }
+/* Padding simétrico: (altura - line-height) / 2 em cada lado → texto e label resting alinhados ao centro.
+   height:3.5rem, font:1rem, line-height:1.5 → text=1.5rem → pad=(3.5-1.5)/2=1rem */
+.d9-input-outline    { padding: 1rem;          height: 3.5rem;  }
+.d9-input-outline-sm { padding: 0.625rem 1rem; height: 2.75rem; font-size: 0.875rem; }
+.d9-input-outline-lg { padding: 1.25rem 1rem;  height: 4rem;    font-size: 1.125rem; }
 
 /* ── Label flutuante ──
    M3: resting = 16sp (1rem), left = 16dp (1rem)
