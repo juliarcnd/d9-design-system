@@ -123,7 +123,7 @@ export const Inputs: StoryObj = {
         <Row label="date">
           <Col>
             <Input
-              type="date"
+              type="text"
               label="Data"
               helperText="dd/mm/aaaa"
               leadingIcon={
