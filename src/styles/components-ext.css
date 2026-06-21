@@ -361,7 +361,9 @@
 .d9-outline-legend span { padding: 0 4px; }
 .d9-field-outline.is-floating .d9-outline-legend { max-width: 100%; }
 
-/* ── Input: sem borda própria, fieldset cuida ── */
+/* ── Input: sem borda própria, fieldset cuida ──
+   Técnica MUI: box-sizing:content-box + height:1.4375em (= content area = text area)
+   O padding empurra o text area para o centro → texto visualmente centrado mesmo com appearance:none */
 .d9-input-outline {
   width: 100%;
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -373,18 +375,20 @@
   outline: none;
   appearance: none;
   -webkit-appearance: none;
-  line-height: normal;
-  box-sizing: border-box;
+  box-sizing: content-box;
+  height: 1.4375em;
+  line-height: 1.4375em;
   position: relative;
   z-index: 1;
 }
 
-/* Padding simétrico: centraliza o texto no campo.
-   Com appearance:none o browser não centraliza sozinho — precisa de padding explícito.
-   md: (56-~19)/2 ≈ 18.5px top/bot  sm: (44-~17)/2 ≈ 13.5px  lg: (64-~22)/2 ≈ 21px */
-.d9-input-outline    { padding: 1.125rem 1rem; height: 3.5rem;  }
-.d9-input-outline-sm { padding: 0.8125rem 1rem; height: 2.75rem; font-size: 0.875rem; }
-.d9-input-outline-lg { padding: 1.3125rem 1rem; height: 4rem;    font-size: 1.125rem; }
+/* padding vertical = (altura_alvo - 1.4375em) / 2
+   md : (56px - 23px) / 2 = 16.5px ≈ 1rem     → total ≈ 55px
+   sm : (44px - 20px) / 2 = 12px   = 0.75rem  → total = 44px
+   lg : (64px - 26px) / 2 = 19px   ≈ 1.1875rem→ total ≈ 64px   */
+.d9-input-outline    { padding: 1rem 1rem;          }
+.d9-input-outline-sm { padding: 0.75rem 1rem; font-size: 0.875rem; }
+.d9-input-outline-lg { padding: 1.1875rem 1rem; font-size: 1.125rem; }
 
 /* ── Label flutuante ──
    M3: resting = 16sp (1rem), left = 16dp (1rem)
