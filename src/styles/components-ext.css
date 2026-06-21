@@ -478,6 +478,11 @@
   z-index: 1;
 }
 
+/* Esconde ícone nativo de date/time — usamos leadingIcon do M3 */
+.d9-input-outline[type="date"]::-webkit-calendar-picker-indicator,
+.d9-input-outline[type="time"]::-webkit-calendar-picker-indicator,
+.d9-input-outline[type="datetime-local"]::-webkit-calendar-picker-indicator { display: none; }
+
 .d9-field-outline-textarea .d9-outline-fieldset        { inset: -6px 0 0 0; }
 .d9-field-outline-textarea .d9-float-label             { top: 1.25rem; transform: none; }
 .d9-field-outline-textarea.is-floating .d9-float-label { top: 0; transform: translateY(-50%); }
