@@ -405,7 +405,7 @@
 }
 
 .d9-field-outline.is-floating .d9-float-label {
-  top: 0;
+  top: -6px;
   transform: translateY(-50%);
   font-size: 0.75rem;
   font-weight: 500;
@@ -485,4 +485,4 @@
 
 .d9-field-outline-textarea .d9-outline-fieldset        { inset: -6px 0 0 0; }
 .d9-field-outline-textarea .d9-float-label             { top: 1.25rem; transform: none; }
-.d9-field-outline-textarea.is-floating .d9-float-label { top: 0; transform: translateY(-50%); }
+.d9-field-outline-textarea.is-floating .d9-float-label { top: -6px; transform: translateY(-50%); }
