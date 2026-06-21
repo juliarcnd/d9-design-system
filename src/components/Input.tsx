@@ -20,6 +20,9 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   bare?: boolean
 }
 
+// Tipos de input que sempre mostram texto nativo no interior — label deve flutuar sempre
+const ALWAYS_FLOAT_TYPES = new Set(["date", "time", "datetime-local", "month", "week", "color"])
+
 export function Input({
   label,
   size = "md",
@@ -40,10 +43,15 @@ export function Input({
   defaultValue,
   placeholder,
   style,
+  type,
   ...props
 }: InputProps) {
   const autoId = useId()
   const id = idProp ?? autoId
+
+  // Hooks sempre no topo — antes de qualquer return condicional
+  const [focused, setFocused]         = useState(false)
+  const [internalVal, setInternalVal] = useState(defaultValue ?? "")
 
   // ── Modo bare (InputGroup) ────────────────────────────────────────────────
   if (bare) {
@@ -57,6 +65,7 @@ export function Input({
     return (
       <input
         id={id}
+        type={type}
         className={bareCls}
         disabled={disabled}
         value={value}
@@ -72,13 +81,9 @@ export function Input({
   }
 
   // ── Modo outlined (Material Design) ──────────────────────────────────────
-  const [focused, setFocused]         = useState(false)
-  const [internalVal, setInternalVal] = useState(defaultValue ?? "")
-
-  const currentVal = value !== undefined ? value : internalVal
-  // date/time inputs sempre mostram texto nativo — label deve sempre flutuar
-  const alwaysFloat = ["date", "time", "datetime-local", "month", "week", "color"].includes(props.type ?? "")
-  const isFloating = alwaysFloat || focused || !!currentVal
+  const currentVal  = value !== undefined ? value : internalVal
+  const alwaysFloat = ALWAYS_FLOAT_TYPES.has(type ?? "")
+  const isFloating  = alwaysFloat || focused || !!currentVal
 
   const wrapCls = [
     "d9-field-outline",
@@ -108,7 +113,6 @@ export function Input({
   return (
     <div className="d9-field-wrap" style={style}>
       <div className={wrapCls}>
-        {/* fieldset+legend cria o gap físico na borda — sem depender de cor de fundo */}
         <fieldset className="d9-outline-fieldset" aria-hidden="true">
           <legend className="d9-outline-legend">
             {label && <span>{label}</span>}
@@ -120,6 +124,7 @@ export function Input({
 
         <input
           id={id}
+          type={type}
           className={inputCls}
           disabled={disabled}
           value={value}
