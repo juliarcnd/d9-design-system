@@ -24,6 +24,11 @@
   --color-surface-raised:   #1A1F2E;
   --color-surface-overlay:  #232839;
 
+  /* Contexto do campo — usado pelo floating label para cobrir o outline.
+     Sobrescreva em containers com fundo diferente:
+     .meu-card { --d9-input-bg: var(--color-surface-raised); } */
+  --d9-input-bg: var(--color-surface);
+
   /* Text */
   --color-text-primary:     #F8F9FC;
   --color-text-secondary:   #9BA5BB;
@@ -81,6 +86,7 @@
   --color-surface:          #FFFFFF;
   --color-surface-raised:   #F0F2F7;
   --color-surface-overlay:  #E2E5EE;
+  --d9-input-bg: var(--color-surface);
 
   --color-text-primary:     #10131A;
   --color-text-secondary:   #4F5670;
