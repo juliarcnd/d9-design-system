@@ -182,16 +182,16 @@ export const Selects: StoryObj = {
   render: () => (
     <div style={{ padding: 32, maxWidth: 700 }}>
       <Section title="Select — Tamanhos">
-        <Row label="sm"><Col><Label size="sm" htmlFor="s-sm">Plano</Label><Select id="s-sm" size="sm" options={PLANOS} placeholder="Selecione..." /></Col></Row>
-        <Row label="md"><Col><Label htmlFor="s-md">Plano</Label><Select id="s-md" size="md" options={PLANOS} placeholder="Selecione..." /></Col></Row>
-        <Row label="lg"><Col><Label size="lg" htmlFor="s-lg">Plano</Label><Select id="s-lg" size="lg" options={PLANOS} placeholder="Selecione..." /></Col></Row>
+        <Row label="sm"><Col><Select id="s-sm" size="sm" label="Plano" options={PLANOS} /></Col></Row>
+        <Row label="md"><Col><Select id="s-md" size="md" label="Plano" options={PLANOS} /></Col></Row>
+        <Row label="lg"><Col><Select id="s-lg" size="lg" label="Plano" options={PLANOS} /></Col></Row>
       </Section>
 
       <Section title="Select — Estados">
-        <Row label="Default"><Col><Label htmlFor="s-def">País</Label><Select id="s-def" options={[{ value: "br", label: "Brasil" }, { value: "us", label: "EUA" }]} placeholder="Selecione..." /></Col></Row>
-        <Row label="Valid"><Col><Label htmlFor="s-val">Moeda</Label><Select id="s-val" state="valid" feedbackMsg="Moeda suportada" defaultValue="brl" options={[{ value: "brl", label: "BRL — Real Brasileiro" }, { value: "usd", label: "USD — Dólar" }]} /></Col></Row>
-        <Row label="Invalid"><Col><Label htmlFor="s-inv" required>Categoria</Label><Select id="s-inv" state="invalid" feedbackMsg="Selecione uma categoria" placeholder="Selecione..." options={[{ value: "a", label: "Categoria A" }]} /></Col></Row>
-        <Row label="Disabled"><Col><Label htmlFor="s-dis">Região</Label><Select id="s-dis" disabled defaultValue="sp" options={[{ value: "sp", label: "São Paulo" }]} /></Col></Row>
+        <Row label="Default"><Col><Select label="País" options={[{ value: "br", label: "Brasil" }, { value: "us", label: "EUA" }]} /></Col></Row>
+        <Row label="Valid"><Col><Select label="Moeda" state="valid" helperText="Moeda suportada" defaultValue="brl" options={[{ value: "brl", label: "BRL — Real Brasileiro" }, { value: "usd", label: "USD — Dólar" }]} /></Col></Row>
+        <Row label="Invalid"><Col><Select label="Categoria" state="invalid" helperText="Selecione uma categoria" options={[{ value: "a", label: "Categoria A" }]} /></Col></Row>
+        <Row label="Disabled"><Col><Select label="Região" disabled defaultValue="sp" options={[{ value: "sp", label: "São Paulo" }]} /></Col></Row>
       </Section>
     </div>
   ),

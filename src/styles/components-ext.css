@@ -502,6 +502,45 @@
 .d9-field-outline.is-floating .d9-input-outline[type="time"]::-webkit-datetime-edit,
 .d9-field-outline.is-floating .d9-input-outline[type="time"]::-webkit-datetime-edit-fields-wrapper { display: block; }
 
+/* ── Select outlined — mesmo padrão do Input ── */
+.d9-select-outline {
+  width: 100%;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: content-box;
+  height: 1.4375em;
+  line-height: 1.4375em;
+  padding: 1rem 2.5rem 1rem 1rem; /* padding-right reserva espaço para a seta */
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+.d9-select-outline-sm { padding: 0.75rem 2.5rem 0.75rem 1rem; font-size: 0.875rem; }
+.d9-select-outline-lg { padding: 1.1875rem 2.5rem 1.1875rem 1rem; font-size: 1.125rem; }
+
+/* Seta customizada */
+.d9-select-arrow {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-secondary);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Select vazio (nada selecionado) → label em resting; com valor → label flutua */
+.d9-select-outline option[value=""] { display: none; }
+
 .d9-field-outline-textarea .d9-outline-fieldset        { inset: -6px 0 0 0; }
 .d9-field-outline-textarea .d9-float-label             { top: 1.25rem; transform: none; }
 .d9-field-outline-textarea.is-floating .d9-float-label { top: -6px; transform: translateY(-50%); }
