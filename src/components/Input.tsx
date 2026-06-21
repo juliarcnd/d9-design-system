@@ -76,7 +76,9 @@ export function Input({
   const [internalVal, setInternalVal] = useState(defaultValue ?? "")
 
   const currentVal = value !== undefined ? value : internalVal
-  const isFloating = focused || !!currentVal
+  // date/time inputs sempre mostram texto nativo — label deve sempre flutuar
+  const alwaysFloat = ["date", "time", "datetime-local", "month", "week", "color"].includes(props.type ?? "")
+  const isFloating = alwaysFloat || focused || !!currentVal
 
   const wrapCls = [
     "d9-field-outline",
