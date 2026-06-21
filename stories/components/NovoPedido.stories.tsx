@@ -138,7 +138,8 @@ function SectionTitle({ children, style }: { children: React.ReactNode; style?: 
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
 
-function Sidebar() {
+function Sidebar({ collapsed }: { collapsed: boolean }) {
+
   const groups = [
     { label: "PEDIDOS", items: [
       { icon: <IC.NovoPedido />,    label: "Novo pedido",          active: true },
@@ -159,29 +160,67 @@ function Sidebar() {
     ]},
   ]
 
+  const w = collapsed ? 52 : 188
+
   return (
-    <nav style={{ width: 188, flexShrink: 0, background: "var(--color-surface)", borderRight: "1px solid var(--color-border)", display: "flex", flexDirection: "column", minHeight: "100vh", padding: "14px 0" }}>
-      <div style={{ padding: "0 14px 18px", display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ width: 28, height: 28, borderRadius: 7, background: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "var(--color-brand-fg)" }}>D</div>
-        <span style={{ fontSize: 15, fontWeight: 800, color: "var(--color-text-primary)" }}>pro.</span>
+    <nav style={{
+      width: w, flexShrink: 0,
+      background: "var(--color-surface)",
+      borderRight: "1px solid var(--color-border)",
+      display: "flex", flexDirection: "column",
+      minHeight: "100vh", padding: "14px 0",
+      transition: "width 220ms ease", overflow: "hidden",
+    }}>
+      {/* Logo */}
+      <div style={{ padding: "0 14px 18px", display: "flex", alignItems: "center", justifyContent: collapsed ? "center" : "flex-start", gap: 8 }}>
+        <div style={{ width: 28, height: 28, borderRadius: 7, background: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "var(--color-brand-fg)", flexShrink: 0 }}>D</div>
+        {!collapsed && <span style={{ fontSize: 15, fontWeight: 800, color: "var(--color-text-primary)", whiteSpace: "nowrap" }}>pro.</span>}
       </div>
 
+      {/* Itens */}
       {groups.map(({ label, items }) => (
         <div key={label} style={{ marginBottom: 4 }}>
-          <p style={{ margin: "10px 14px 4px", fontSize: 10, fontWeight: 700, color: "var(--color-text-disabled)", letterSpacing: "0.08em" }}>{label}</p>
+          {!collapsed && (
+            <p style={{ margin: "10px 14px 4px", fontSize: 10, fontWeight: 700, color: "var(--color-text-disabled)", letterSpacing: "0.08em", whiteSpace: "nowrap" }}>
+              {label}
+            </p>
+          )}
+          {collapsed && <div style={{ height: 10 }} />}
+
           {items.map(({ icon, label: lbl, active, badge }) => (
-            <div key={lbl} style={{
-              display: "flex", alignItems: "center", gap: 9,
-              padding: "7px 14px", cursor: "pointer",
-              background: active ? "var(--color-brand-subtle)" : "transparent",
-              borderRight: `2px solid ${active ? "var(--color-brand)" : "transparent"}`,
-              fontSize: 12.5, fontWeight: active ? 600 : 400,
-              color: active ? "var(--color-brand)" : "var(--color-text-secondary)",
-              transition: "background 100ms",
-            }}>
+            <div
+              key={lbl}
+              title={collapsed ? lbl : undefined}
+              style={{
+                display: "flex", alignItems: "center",
+                gap: collapsed ? 0 : 9,
+                padding: collapsed ? "9px 0" : "7px 14px",
+                justifyContent: collapsed ? "center" : "flex-start",
+                cursor: "pointer",
+                background: active ? "var(--color-brand-subtle)" : "transparent",
+                borderRight: `2px solid ${active ? "var(--color-brand)" : "transparent"}`,
+                fontSize: 12.5, fontWeight: active ? 600 : 400,
+                color: active ? "var(--color-brand)" : "var(--color-text-secondary)",
+                transition: "background 100ms",
+                position: "relative",
+              }}
+            >
               <span style={{ flexShrink: 0, opacity: active ? 1 : 0.65 }}>{icon}</span>
-              <span style={{ flex: 1 }}>{lbl}</span>
-              {badge && <span style={{ background: "var(--color-brand)", color: "var(--color-brand-fg)", fontSize: 10, fontWeight: 700, borderRadius: 9999, padding: "1px 6px" }}>{badge}</span>}
+              {!collapsed && <span style={{ flex: 1, whiteSpace: "nowrap" }}>{lbl}</span>}
+              {!collapsed && badge && (
+                <span style={{ background: "var(--color-brand)", color: "var(--color-brand-fg)", fontSize: 10, fontWeight: 700, borderRadius: 9999, padding: "1px 6px" }}>
+                  {badge}
+                </span>
+              )}
+              {collapsed && badge && (
+                <span style={{
+                  position: "absolute", top: 4, right: 6,
+                  background: "var(--color-brand)", color: "var(--color-brand-fg)",
+                  fontSize: 9, fontWeight: 700, borderRadius: 9999, padding: "1px 4px", lineHeight: 1.4,
+                }}>
+                  {badge}
+                </span>
+              )}
             </div>
           ))}
         </div>
@@ -556,9 +595,10 @@ function Step5({ items, frete, selectedClient }: { items: { name: string; qty: n
 
 function NovoPedidoScreen() {
   const [step, setStep]           = useState(1)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
   const [tab, setTab]             = useState("cliente")
   const [selectedClient, setSelectedClient] = useState("")
-  const [frete, setFrete]         = useState("sedex")
+  const [frete, setFrete]         = useState("")
   const [items, setItems]         = useState<{ name: string; qty: number; price: number }[]>([])
   const [cepLoading, setCepLoading] = useState(false)
 
@@ -570,12 +610,26 @@ function NovoPedidoScreen() {
 
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "var(--color-bg)", fontFamily: "Plus Jakarta Sans, sans-serif" }}>
-      <Sidebar />
+      <Sidebar collapsed={!sidebarOpen} />
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
         {/* Topbar */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 24px", borderBottom: "1px solid var(--color-border)", background: "var(--color-surface)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            {/* Toggle sidebar */}
+            <button
+              onClick={() => setSidebarOpen((v) => !v)}
+              title={sidebarOpen ? "Recolher menu" : "Expandir menu"}
+              style={{
+                background: "none", border: "none", cursor: "pointer", padding: 5, borderRadius: 6,
+                color: "var(--color-text-secondary)", display: "flex", alignItems: "center",
+                transition: "background 120ms",
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+            </button>
             <span style={{ fontSize: 13, color: "var(--color-text-secondary)" }}>🇧🇷 D9Pag</span>
             <span style={{ fontSize: 13, color: "var(--color-text-secondary)" }}>D9Med</span>
           </div>
