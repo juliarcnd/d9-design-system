@@ -316,6 +316,8 @@
 
 /* ══════════════════════════════════════════════════════════════════════════════
    OUTLINED FIELD — Material Design M2 Outlined Text Field
+   Usa fieldset+legend para criar gap físico na borda — sem depender de cor
+   de fundo, funciona em qualquer container.
 ══════════════════════════════════════════════════════════════════════════════ */
 
 .d9-field-wrap {
@@ -323,14 +325,40 @@
   flex-direction: column;
 }
 
-/* Container posiciona label e input */
 .d9-field-outline {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-/* O próprio input */
+/* ── Fieldset: borda do campo ── */
+.d9-outline-fieldset {
+  position: absolute;
+  inset: -6px 0 0 0;
+  border: 1.5px solid var(--color-border);
+  border-radius: 0.375rem;
+  pointer-events: none;
+  margin: 0;
+  padding: 0 8px;
+  transition: border-color 150ms ease, border-width 50ms ease;
+}
+
+/* ── Legend: colapsada = sem gap; expandida = gap do tamanho da label ── */
+.d9-outline-legend {
+  display: block;
+  max-width: 0.01px;
+  height: 11px;
+  padding: 0;
+  font-size: 0.6875rem;
+  transition: max-width 150ms ease;
+  white-space: nowrap;
+  visibility: hidden;
+  overflow: hidden;
+}
+.d9-outline-legend span { padding: 0 3px; }
+.d9-field-outline.is-floating .d9-outline-legend { max-width: 100%; }
+
+/* ── Input: sem borda própria, fieldset cuida ── */
 .d9-input-outline {
   width: 100%;
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -338,27 +366,21 @@
   font-weight: 400;
   color: var(--color-text-primary);
   background: transparent;
-  border: 1.5px solid var(--color-border);
-  border-radius: 0.375rem;
+  border: none;
   outline: none;
   appearance: none;
   -webkit-appearance: none;
-  transition: border-color 150ms ease;
   line-height: 1.5;
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 
-/* Padding padrão md — top maior para a label não colidir */
 .d9-input-outline           { padding: 1rem 0.875rem 0.5rem; height: 3.5rem; }
 .d9-input-outline-sm        { padding: 0.75rem 0.75rem 0.25rem; height: 2.75rem; font-size: 0.8125rem; }
 .d9-input-outline-lg        { padding: 1.25rem 1rem 0.5rem; height: 4rem; font-size: 1rem; }
 
-.d9-input-outline::placeholder { color: transparent; } /* esconde placeholder nativo */
-
-/* Mostra placeholder apenas quando floating (campo focado ou preenchido) */
-.d9-field-outline.is-floating .d9-input-outline::placeholder { color: var(--color-text-disabled); }
-
-/* Label flutuante */
+/* ── Label flutuante ── */
 .d9-float-label {
   position: absolute;
   left: 0.875rem;
@@ -368,72 +390,38 @@
   font-size: 0.875rem;
   font-weight: 400;
   color: var(--color-text-secondary);
-  background: transparent;
-  padding: 0;
   pointer-events: none;
   transition: top 150ms ease, transform 150ms ease, font-size 150ms ease,
-              font-weight 150ms ease, color 150ms ease, padding 150ms ease,
-              background 150ms ease;
+              font-weight 150ms ease, color 150ms ease;
   white-space: nowrap;
   line-height: 1;
+  z-index: 2;
 }
 
-.d9-input-outline-sm ~ .d9-float-label,
-.d9-field-outline-sm .d9-float-label {
-  font-size: 0.8125rem;
-}
-
-/* Estado flutuante — label sobe para o topo da borda */
 .d9-field-outline.is-floating .d9-float-label {
   top: 0;
   transform: translateY(-50%);
   font-size: 0.6875rem;
   font-weight: 600;
-  background: var(--d9-input-bg, var(--color-surface));
-  padding: 0 0.25rem;
-  left: 0.75rem;
 }
 
-/* Foco — borda brand + label brand */
-.d9-field-outline.is-focused .d9-input-outline {
-  border-color: var(--color-brand);
-  border-width: 2px;
-}
-.d9-field-outline.is-focused .d9-float-label {
-  color: var(--color-brand);
-}
+/* ── Estados: foco, válido, inválido, disabled ── */
+.d9-field-outline.is-focused  .d9-outline-fieldset { border-color: var(--color-brand);   border-width: 2px; }
+.d9-field-outline.is-focused  .d9-float-label      { color: var(--color-brand); }
 
-/* Estado válido */
-.d9-field-outline.is-valid .d9-input-outline {
-  border-color: var(--color-success);
-}
-.d9-field-outline.is-valid.is-focused .d9-input-outline {
-  border-color: var(--color-success);
-  border-width: 2px;
-}
-.d9-field-outline.is-valid .d9-float-label { color: var(--color-success); }
+.d9-field-outline.is-valid    .d9-outline-fieldset { border-color: var(--color-success); }
+.d9-field-outline.is-valid.is-focused .d9-outline-fieldset { border-width: 2px; }
+.d9-field-outline.is-valid    .d9-float-label      { color: var(--color-success); }
 
-/* Estado inválido */
-.d9-field-outline.is-invalid .d9-input-outline {
-  border-color: var(--color-error);
-}
-.d9-field-outline.is-invalid.is-focused .d9-input-outline {
-  border-color: var(--color-error);
-  border-width: 2px;
-}
-.d9-field-outline.is-invalid .d9-float-label { color: var(--color-error); }
+.d9-field-outline.is-invalid  .d9-outline-fieldset { border-color: var(--color-error); }
+.d9-field-outline.is-invalid.is-focused .d9-outline-fieldset { border-width: 2px; }
+.d9-field-outline.is-invalid  .d9-float-label      { color: var(--color-error); }
 
-/* Disabled */
-.d9-field-outline.is-disabled .d9-input-outline {
-  border-color: var(--color-border-subtle);
-  color: var(--color-text-disabled);
-  cursor: not-allowed;
-}
-.d9-field-outline.is-disabled .d9-float-label {
-  color: var(--color-text-disabled);
-}
+.d9-field-outline.is-disabled .d9-outline-fieldset { border-color: var(--color-border-subtle); }
+.d9-field-outline.is-disabled .d9-input-outline    { color: var(--color-text-disabled); cursor: not-allowed; }
+.d9-field-outline.is-disabled .d9-float-label      { color: var(--color-text-disabled); }
 
-/* Helper text */
+/* ── Helper text ── */
 .d9-field-helper {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   font-size: 0.75rem;
@@ -445,13 +433,9 @@
 .d9-field-helper-error   { color: var(--color-error); }
 .d9-field-helper-success { color: var(--color-success); }
 
-/* Ícones leading / trailing */
+/* ── Ícones leading / trailing ── */
 .d9-input-outline.has-leading  { padding-left: 2.5rem; }
 .d9-input-outline.has-trailing { padding-right: 2.5rem; }
-
-/* Label recua quando há ícone leading */
-.d9-field-outline:has(.has-leading) .d9-float-label { left: 2.5rem; }
-.d9-field-outline.is-floating:has(.has-leading) .d9-float-label { left: 0.75rem; }
 .d9-field-outline .d9-field-icon-lead,
 .d9-field-outline .d9-field-icon-trail {
   position: absolute;
@@ -459,27 +443,30 @@
   color: var(--color-text-secondary);
   display: flex; align-items: center;
   pointer-events: none;
+  z-index: 2;
 }
 .d9-field-outline .d9-field-icon-lead  { left: 0.75rem; }
 .d9-field-outline .d9-field-icon-trail { right: 0.75rem; }
 
-/* Textarea outlined */
+.d9-field-outline:has(.has-leading) .d9-float-label          { left: 2.5rem; }
+.d9-field-outline.is-floating:has(.has-leading) .d9-float-label { left: 0.875rem; }
+
+/* ── Textarea outlined ── */
 .d9-textarea-outline {
   width: 100%; box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   font-size: 0.875rem;
   color: var(--color-text-primary);
   background: transparent;
-  border: 1.5px solid var(--color-border);
-  border-radius: 0.375rem;
+  border: none;
   outline: none; appearance: none; -webkit-appearance: none;
-  transition: border-color 150ms ease;
   resize: vertical;
   padding: 1.25rem 0.875rem 0.5rem;
   min-height: 6rem;
+  position: relative;
+  z-index: 1;
 }
-.d9-textarea-outline::placeholder { color: transparent; }
-.d9-field-outline.is-floating .d9-textarea-outline::placeholder { color: var(--color-text-disabled); }
 
-.d9-field-outline-textarea .d9-float-label { top: 1.125rem; transform: none; }
+.d9-field-outline-textarea .d9-outline-fieldset        { inset: -6px 0 0 0; }
+.d9-field-outline-textarea .d9-float-label             { top: 1.125rem; transform: none; }
 .d9-field-outline-textarea.is-floating .d9-float-label { top: 0; transform: translateY(-50%); }

@@ -54,7 +54,6 @@ export function Input({
       state === "invalid" ? "d9-input-invalid"  : "",
       className,
     ].filter(Boolean).join(" ")
-
     return (
       <input
         id={id}
@@ -107,6 +106,13 @@ export function Input({
   return (
     <div className="d9-field-wrap" style={style}>
       <div className={wrapCls}>
+        {/* fieldset+legend cria o gap físico na borda — sem depender de cor de fundo */}
+        <fieldset className="d9-outline-fieldset" aria-hidden="true">
+          <legend className="d9-outline-legend">
+            {label && <span>{label}</span>}
+          </legend>
+        </fieldset>
+
         {leadingIcon  && <span className="d9-field-icon-lead">{leadingIcon}</span>}
         {trailingIcon && <span className="d9-field-icon-trail">{trailingIcon}</span>}
 
@@ -127,7 +133,6 @@ export function Input({
 
         {label && <label className="d9-float-label" htmlFor={id}>{label}</label>}
       </div>
-
       {helper && <span className={helperCls}>{helper}</span>}
     </div>
   )

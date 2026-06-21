@@ -66,6 +66,12 @@ export function Textarea({
   return (
     <div className="d9-field-wrap">
       <div className={wrapCls}>
+        <fieldset className="d9-outline-fieldset" aria-hidden="true">
+          <legend className="d9-outline-legend">
+            {label && <span>{label}</span>}
+          </legend>
+        </fieldset>
+
         <textarea
           id={id}
           className={["d9-textarea-outline", className].filter(Boolean).join(" ")}
