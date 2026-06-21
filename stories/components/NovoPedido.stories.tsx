@@ -543,6 +543,7 @@ function NovoPedidoScreen() {
 const meta: Meta = {
   title: "Telas/Novo Pedido — D9 Pro",
   component: NovoPedidoScreen,
+  globals: { brand: "pro", theme: "Dark" },
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -572,5 +573,6 @@ export default meta
 
 export const Tela: StoryObj = {
   name: "Tela completa",
+  globals: { brand: "pro", theme: "Dark" },
   render: () => <NovoPedidoScreen />,
 }
