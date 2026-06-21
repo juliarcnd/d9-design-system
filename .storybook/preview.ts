@@ -2,6 +2,7 @@ import type { Preview, Decorator } from "@storybook/react"
 import { withThemeByDataAttribute } from "@storybook/addon-themes"
 import "../src/styles/fonts.css"
 import "../src/styles/base.css"
+import "../src/styles/components.css"
 
 // ─── Brand switcher decorator ────────────────────────────────────────────────
 // Lê o global `brand` e aplica data-brand no wrapper do story.
