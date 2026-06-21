@@ -300,7 +300,7 @@ export const InputGroups: StoryObj = {
             <Label htmlFor="ig-val">Valor</Label>
             <InputGroup>
               <InputGroupText>R$</InputGroupText>
-              <Input id="ig-val" placeholder="0,00" style={{ fontFamily: "IBM Plex Mono, monospace" }} />
+              <Input bare id="ig-val" placeholder="0,00" style={{ fontFamily: "IBM Plex Mono, monospace" }} />
             </InputGroup>
           </Col>
         </Row>
@@ -308,7 +308,7 @@ export const InputGroups: StoryObj = {
           <Col>
             <Label htmlFor="ig-tax">Taxa</Label>
             <InputGroup>
-              <Input id="ig-tax" placeholder="0.00" style={{ fontFamily: "IBM Plex Mono, monospace" }} />
+              <Input bare id="ig-tax" placeholder="0.00" style={{ fontFamily: "IBM Plex Mono, monospace" }} />
               <InputGroupText>%</InputGroupText>
             </InputGroup>
           </Col>
@@ -318,7 +318,7 @@ export const InputGroups: StoryObj = {
             <Label htmlFor="ig-both">Peso</Label>
             <InputGroup>
               <InputGroupText>de</InputGroupText>
-              <Input id="ig-both" placeholder="0" style={{ fontFamily: "IBM Plex Mono, monospace" }} />
+              <Input bare id="ig-both" placeholder="0" style={{ fontFamily: "IBM Plex Mono, monospace" }} />
               <InputGroupText>kg</InputGroupText>
             </InputGroup>
           </Col>
@@ -330,7 +330,7 @@ export const InputGroups: StoryObj = {
           <Col>
             <Label htmlFor="ig-search">Buscar transação</Label>
             <InputGroup>
-              <Input id="ig-search" placeholder="ID ou referência..." />
+              <Input bare id="ig-search" placeholder="ID ou referência..." />
               <Button variant="brand" style={{ borderRadius: "0 0.375rem 0.375rem 0" }}>Buscar</Button>
             </InputGroup>
           </Col>
@@ -340,7 +340,7 @@ export const InputGroups: StoryObj = {
             <Label htmlFor="ig-url">Link de pagamento</Label>
             <InputGroup>
               <InputGroupText>https://</InputGroupText>
-              <Input id="ig-url" defaultValue="pag.d9.com/link/abc123" readOnly style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: "0.8125rem" }} />
+              <Input bare id="ig-url" defaultValue="pag.d9.com/link/abc123" readOnly style={{ fontFamily: "IBM Plex Mono, monospace", fontSize: "0.8125rem" }} />
               <Button variant="secondary" style={{ borderRadius: "0 0.375rem 0.375rem 0" }}>Copiar</Button>
             </InputGroup>
           </Col>
@@ -349,7 +349,7 @@ export const InputGroups: StoryObj = {
           <Col>
             <Label htmlFor="ig-fb" required>Subdomínio</Label>
             <InputGroup feedbackMsg="Subdomínio disponível" feedbackType="valid">
-              <Input id="ig-fb" defaultValue="empresa" state="valid" />
+              <Input bare id="ig-fb" defaultValue="empresa" state="valid" />
               <InputGroupText>.d9.com</InputGroupText>
             </InputGroup>
           </Col>
@@ -362,7 +362,7 @@ export const InputGroups: StoryObj = {
             <Col>
               <InputGroup>
                 <InputGroupText size={s}>R$</InputGroupText>
-                <Input size={s} placeholder="Valor" style={{ fontFamily: "IBM Plex Mono, monospace" }} />
+                <Input bare size={s} placeholder="Valor" style={{ fontFamily: "IBM Plex Mono, monospace" }} />
                 <InputGroupText size={s}>,00</InputGroupText>
               </InputGroup>
             </Col>

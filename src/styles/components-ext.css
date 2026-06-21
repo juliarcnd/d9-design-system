@@ -321,12 +321,14 @@
 .d9-field-wrap {
   display: flex;
   flex-direction: column;
+  background: inherit; /* propaga cor do container para a label via herança */
 }
 
 /* Container posiciona label e input */
 .d9-field-outline {
   position: relative;
   display: flex;
+  background: inherit; /* necessário para a cadeia de inherit chegar à label */
   align-items: center;
 }
 

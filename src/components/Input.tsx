@@ -16,6 +16,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   feedbackMsg?: string
   leadingIcon?: React.ReactNode
   trailingIcon?: React.ReactNode
+  /** Modo bare: renderiza <input> simples sem wrapper — para uso dentro de InputGroup */
+  bare?: boolean
 }
 
 export function Input({
@@ -27,6 +29,7 @@ export function Input({
   feedbackMsg,
   leadingIcon,
   trailingIcon,
+  bare,
   id: idProp,
   className = "",
   disabled,
@@ -36,12 +39,41 @@ export function Input({
   value,
   defaultValue,
   placeholder,
+  style,
   ...props
 }: InputProps) {
   const autoId = useId()
   const id = idProp ?? autoId
 
-  const [focused, setFocused]   = useState(false)
+  // ── Modo bare (InputGroup) ────────────────────────────────────────────────
+  if (bare) {
+    const bareCls = [
+      "d9-input",
+      size !== "md" ? `d9-input-${size}` : "",
+      state === "valid"   ? "d9-input-valid"   : "",
+      state === "invalid" ? "d9-input-invalid"  : "",
+      className,
+    ].filter(Boolean).join(" ")
+
+    return (
+      <input
+        id={id}
+        className={bareCls}
+        disabled={disabled}
+        value={value}
+        defaultValue={value === undefined ? defaultValue : undefined}
+        placeholder={placeholder}
+        style={style}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        {...props}
+      />
+    )
+  }
+
+  // ── Modo outlined (Material Design) ──────────────────────────────────────
+  const [focused, setFocused]         = useState(false)
   const [internalVal, setInternalVal] = useState(defaultValue ?? "")
 
   const currentVal = value !== undefined ? value : internalVal
@@ -64,17 +96,16 @@ export function Input({
     className,
   ].filter(Boolean).join(" ")
 
-  // placeholder vira texto de apoio abaixo; helperText/feedbackMsg têm prioridade
   const helper = helperText ?? feedbackMsg ?? hint ?? placeholder
 
   const helperCls = [
     "d9-field-helper",
-    state === "invalid" ? "d9-field-helper-error"   : "",
-    state === "valid"   ? "d9-field-helper-success"  : "",
+    state === "invalid" ? "d9-field-helper-error"  : "",
+    state === "valid"   ? "d9-field-helper-success" : "",
   ].filter(Boolean).join(" ")
 
   return (
-    <div className="d9-field-wrap">
+    <div className="d9-field-wrap" style={style}>
       <div className={wrapCls}>
         {leadingIcon  && <span className="d9-field-icon-lead">{leadingIcon}</span>}
         {trailingIcon && <span className="d9-field-icon-trail">{trailingIcon}</span>}
@@ -94,9 +125,7 @@ export function Input({
           {...props}
         />
 
-        {label && (
-          <label className="d9-float-label" htmlFor={id}>{label}</label>
-        )}
+        {label && <label className="d9-float-label" htmlFor={id}>{label}</label>}
       </div>
 
       {helper && <span className={helperCls}>{helper}</span>}
