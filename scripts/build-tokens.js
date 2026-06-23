@@ -53,6 +53,7 @@ const semPro      = readJson(path.join(JSON_DIR, 'semantic', 'brand-pro.json'));
 const semPag      = readJson(path.join(JSON_DIR, 'semantic', 'brand-pag.json'));
 const typo        = readJson(path.join(JSON_DIR, 'typography.json'));
 const dim         = readJson(path.join(JSON_DIR, 'dimension.json'));
+const textStyles  = readJson(path.join(JSON_DIR, 'text-styles.json'));
 
 // ── derive CSS var lists ───────────────────────────────────────────────────
 
@@ -96,13 +97,16 @@ const typoEntries = flattenTypo(typo);
 // Dimension tokens: prefix "dimension"
 const dimEntries = flatten(dim, 'dimension');
 
+// Text styles: prefix "text"
+const textStyleEntries = flatten(textStyles, 'text');
+
 // ── assemble CSS ───────────────────────────────────────────────────────────
 
 const header = `/* AUTO-GENERATED — edite src/tokens/json/ e rode: npm run tokens:build */\n/* gerado em: ${new Date().toISOString()} */\n\n`;
 
 const primitiveBlock = renderBlock(
   ':root',
-  [...primColorEntries, ...primNumberEntries, ...typoEntries, ...dimEntries],
+  [...primColorEntries, ...primNumberEntries, ...typoEntries, ...dimEntries, ...textStyleEntries],
 );
 
 const darkBlock  = renderBlock(':root,\n[data-theme="dark"]', darkEntries);
@@ -130,7 +134,7 @@ const css = [
 fs.writeFileSync(OUT_FILE, css, 'utf8');
 
 const totalVars = primColorEntries.length + primNumberEntries.length + typoEntries.length +
-  dimEntries.length + darkEntries.length + lightEntries.length +
+  dimEntries.length + textStyleEntries.length + darkEntries.length + lightEntries.length +
   techEntries.length + proEntries.length + pagEntries.length;
 
 console.log(`✓ tokens-generated.css escrito em ${OUT_FILE}`);

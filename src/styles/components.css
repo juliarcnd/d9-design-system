@@ -287,6 +287,27 @@
 .d9-form-valid   { font-size: 0.75rem; color: var(--color-success);        margin-top: 0.35rem; line-height: 1.4; }
 .d9-form-invalid { font-size: 0.75rem; color: var(--color-error);          margin-top: 0.35rem; line-height: 1.4; }
 
+/* ── Input wrapper com ícones ── */
+.d9-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.d9-input-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  color: var(--color-text-secondary);
+}
+
+.d9-input-icon-leading  { left: 0.75rem; }
+.d9-input-icon-trailing { right: 0.75rem; }
+
+.d9-input-has-leading  { padding-left:  2.25rem !important; }
+.d9-input-has-trailing { padding-right: 2.25rem !important; }
+
 /* ── Input / Textarea / Select — base ── */
 .d9-input,
 .d9-textarea,

@@ -1,0 +1,99 @@
+{
+  "display-lg": {
+    "fontSize":      { "value": "3.75rem",  "type": "fontSize"      },
+    "lineHeight":    { "value": "4.25rem",  "type": "lineHeight"    },
+    "fontWeight":    { "value": "700",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "-0.02em",  "type": "letterSpacing" }
+  },
+  "display-md": {
+    "fontSize":      { "value": "3rem",     "type": "fontSize"      },
+    "lineHeight":    { "value": "3.5rem",   "type": "lineHeight"    },
+    "fontWeight":    { "value": "700",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "-0.02em",  "type": "letterSpacing" }
+  },
+  "display-sm": {
+    "fontSize":      { "value": "2.25rem",  "type": "fontSize"      },
+    "lineHeight":    { "value": "2.75rem",  "type": "lineHeight"    },
+    "fontWeight":    { "value": "700",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "-0.01em",  "type": "letterSpacing" }
+  },
+  "heading-xl": {
+    "fontSize":      { "value": "1.875rem", "type": "fontSize"      },
+    "lineHeight":    { "value": "2.375rem", "type": "lineHeight"    },
+    "fontWeight":    { "value": "700",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "-0.01em",  "type": "letterSpacing" }
+  },
+  "heading-lg": {
+    "fontSize":      { "value": "1.5rem",   "type": "fontSize"      },
+    "lineHeight":    { "value": "2rem",     "type": "lineHeight"    },
+    "fontWeight":    { "value": "600",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  },
+  "heading-md": {
+    "fontSize":      { "value": "1.25rem",  "type": "fontSize"      },
+    "lineHeight":    { "value": "1.75rem",  "type": "lineHeight"    },
+    "fontWeight":    { "value": "600",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  },
+  "heading-sm": {
+    "fontSize":      { "value": "1.125rem", "type": "fontSize"      },
+    "lineHeight":    { "value": "1.625rem", "type": "lineHeight"    },
+    "fontWeight":    { "value": "600",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  },
+  "body-lg": {
+    "fontSize":      { "value": "1.125rem", "type": "fontSize"      },
+    "lineHeight":    { "value": "1.75rem",  "type": "lineHeight"    },
+    "fontWeight":    { "value": "400",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  },
+  "body-md": {
+    "fontSize":      { "value": "1rem",     "type": "fontSize"      },
+    "lineHeight":    { "value": "1.5rem",   "type": "lineHeight"    },
+    "fontWeight":    { "value": "400",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  },
+  "body-sm": {
+    "fontSize":      { "value": "0.875rem", "type": "fontSize"      },
+    "lineHeight":    { "value": "1.25rem",  "type": "lineHeight"    },
+    "fontWeight":    { "value": "400",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  },
+  "caption": {
+    "fontSize":      { "value": "0.75rem",  "type": "fontSize"      },
+    "lineHeight":    { "value": "1rem",     "type": "lineHeight"    },
+    "fontWeight":    { "value": "400",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0.01em",   "type": "letterSpacing" }
+  },
+  "label-lg": {
+    "fontSize":      { "value": "1rem",     "type": "fontSize"      },
+    "lineHeight":    { "value": "1.5rem",   "type": "lineHeight"    },
+    "fontWeight":    { "value": "500",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  },
+  "label-md": {
+    "fontSize":      { "value": "0.875rem", "type": "fontSize"      },
+    "lineHeight":    { "value": "1.25rem",  "type": "lineHeight"    },
+    "fontWeight":    { "value": "500",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  },
+  "label-sm": {
+    "fontSize":      { "value": "0.75rem",  "type": "fontSize"      },
+    "lineHeight":    { "value": "1rem",     "type": "lineHeight"    },
+    "fontWeight":    { "value": "500",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0.01em",   "type": "letterSpacing" }
+  },
+  "special-code": {
+    "fontSize":      { "value": "0.875rem", "type": "fontSize"      },
+    "lineHeight":    { "value": "1.5rem",   "type": "lineHeight"    },
+    "fontWeight":    { "value": "400",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" },
+    "fontFamily":    { "value": "'IBM Plex Mono', 'Courier New', monospace", "type": "fontFamily" }
+  },
+  "special-numeric": {
+    "fontSize":      { "value": "1rem",     "type": "fontSize"      },
+    "lineHeight":    { "value": "1.5rem",   "type": "lineHeight"    },
+    "fontWeight":    { "value": "600",      "type": "fontWeight"    },
+    "letterSpacing": { "value": "0em",      "type": "letterSpacing" }
+  }
+}
